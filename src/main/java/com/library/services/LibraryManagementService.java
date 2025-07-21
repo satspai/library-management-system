@@ -27,5 +27,17 @@ public class LibraryManagementService {
             Book book = bookDatabase.get(bookId);
             Member member = memberDatabase.get(memberId);
 
+            if (book == null) return "Book not found";
+            if (member == null) return "Member not found";
+            if (!memberId.equals(book.getIssuedTo())) return "Book was not issued to this member";
+
+            book.setStatus("AVAILABLE");
+            book.setIssuedTo(null);
+
+            return "Book " + book.getTitle() + " was successfully returned by " + member.getName();
+        }
+
+        public static Map<String, Book> getBookDatabase () {
+            return bookDatabase;
         }
 }
